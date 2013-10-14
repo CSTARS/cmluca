@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+	    
+	    <g:HTML ui:field="location"></g:HTML>
+	    
+	    <table class="table">
+	        <tr>
+	            <td><g:HTML ui:field="airSpace1000Icon"></g:HTML></td>
+	            <td>Air Space</td>
+	            <td><g:HTML ui:field="airSpace1000Text"></g:HTML></td>
+	        </tr>
+	        <tr>
+                <td><g:HTML ui:field="airSpace4000Icon"></g:HTML></td>
+                <td>Air Space</td>
+                <td><g:HTML ui:field="airSpace4000Text"></g:HTML></td>
+            </tr>
+            <tr>
+                <td><g:HTML ui:field="flightPath1000Icon"></g:HTML></td>
+                <td>Flight Path</td>
+                <td><g:HTML ui:field="flightPath1000Text"></g:HTML></td>
+            </tr>
+            <tr>
+                <td><g:HTML ui:field="flightPath4000Icon"></g:HTML></td>
+                <td>Flight Path</td>
+                <td><g:HTML ui:field="flightPath4000Text"></g:HTML></td>
+            </tr>
+            <tr>
+                <td><g:HTML ui:field="militaryBase1000Icon"></g:HTML></td>
+                <td>Military Base</td>
+                <td><g:HTML ui:field="militaryBase1000Text"></g:HTML></td>
+            </tr>
+            <tr>
+                <td><g:HTML ui:field="militaryBase4000Icon"></g:HTML></td>
+                <td>Military Base</td>
+                <td><g:HTML ui:field="militaryBase4000Text"></g:HTML></td>
+            </tr>
+	    </table>
+
+	</g:HTMLPanel>
+</ui:UiBinder> 

@@ -1,0 +1,17 @@
+.cmluca-search-result {
+	font-size: 15px;
+}
+
+.cmluca-search-result:hover {
+    cursor : pointer;
+    background-color : #eee;
+}
+
+.cmluca-search-result span {
+	float: right;
+	color: #2278da;
+}
+
+.cmluca-search-result i {
+    color : #2278da;
+}

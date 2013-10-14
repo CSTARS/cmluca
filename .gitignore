@@ -1,0 +1,7 @@
+*.DS_STORE
+gwt-unitCache
+test
+war/cmluca
+war/WEB-INF/deploy
+war/WEB-INF/lib
+war/WEB-INF/classes

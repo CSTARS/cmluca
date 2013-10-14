@@ -1,0 +1,114 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+  <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <script type="text/javascript" language="javascript" src="cmluca/cmluca.nocache.js"></script>
+        <script type="text/javascript" language="javascript">
+        
+        var mapConfig = {
+                title: "CMLUCA",
+                //anchor: "GadgetPanel",
+                zoom : 7,
+                center : [-121.01, 38.22],
+                selectedBasemap:"149a9bb14d604bd18f4597b21c19fac7",
+                intersectLayers:[],
+                basemaps: [],
+                searchServices : [
+                   {
+                       url : "http://arcserve.lawr.ucdavis.edu/arcgis/rest/services/CalMAPPER/Incorporated_Cities/MapServer/0",
+                       type : "query",
+                       parameter : "NAME",
+                       format : function(attr) {
+                           console.log(attr);
+                           return attr.NAME+" (City)";
+                       }
+                   },
+                   {
+                       url : "http://atlas.resources.ca.gov/ArcGIS/rest/services/Boundaries/CaCountyBound/MapServer/0",
+                       type : "query",
+                       parameter : "FEAT_NAME"
+                   },
+                   {
+                       url : "http://tasks.arcgis.com/ArcGIS/rest/services/WorldLocator/GeocodeServer",
+                       type : "geocoder"
+                   }
+                ],
+                datalayers: [
+                {
+                    label:"Military Bases",
+                    url:"http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/DOD_Inst_Ranges/MapServer",
+                    legendUrl: "http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/DOD_Inst_Ranges/MapServer/legend?f=json",
+                    visible:true,
+                    opacity:0.8
+                },
+                {
+                    label:"Flight Paths",
+                    url:"http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/MTR_corridor_in_WGA_states/MapServer",
+                    legendUrl: "http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/MTR_corridor_in_WGA_states/MapServer/legend?f=json",
+                    visible:true,
+                    opacity:0.8
+                },
+                {
+                    label:"Air Space",
+                    url:"http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/SUA_in_WGA_states/MapServer",
+                    legendUrl: "http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/SUA_in_WGA_states/MapServer/legend?f=json",
+                    visible:true,
+                    opacity:0.8
+                },
+
+            ],
+             
+            provider: {
+             icon: "",
+             popup: "<div class='gwt-HTML'><div style='font-size: 14px; padding-bottom: 10px; color: #333333; text-align: center; font-weight: bold'>"+
+                     "California Military Land Use Compatibility Analyst (CMLUCA)</div><div style='color: #444444'><p>CMLUCA allows  you to determine if "+
+                     "your project has the potential to affect areas important to military readiness. Gov. Code sections 65352, 65404, 65940, and 65944, "+
+                     "amended by <a href='http://www.leginfo.ca.gov/pub/03-04/bill/sen/sb_1451-1500/sb_1462_bill_20040930_chaptered.pdf' target='_blank'>Senate "+
+                     "Bill 1462 (Kuehl 2004)</a> requires local planning agencies to notify the military whenever a proposed development project or general plan "+
+                     "amendment meets one or more of the following conditions:</p><ul><li>Is located within 1,000 feet of a military installation,</li><li>Is located "+
+                     "within special use airspace, or</li><li>Is located beneath a low-level flight path</li></ul><p>If you are a private applicant proposing a development "+
+                     "project, or a city or county proposing a general plan amendment or update, you may use this program to determine whether your project meets any of the "+
+                     "above threshold criteria. This program will generate a report with a map that indicates whether a copy of a project application or proposed action must be "+
+                     "sent to the appropriate branch of the military by the local planning agency.</p>When using the application, browse to your development "+
+                     "project, or use the search box to locate an address, city, or other feature. County staff can zoom to their county on the map by entering in "+
+                     "the name of the county and the word county into the search box at the top of the screen. You can print this map. To obtain a printed text report for "+
+                     "your county, select your county from the list at the top of the screen labeled county reports. Clicking on the map will quickly show if the location "+
+                     "has any of the specific military designations, as described above. Use the '<i class='icon-print'></i>' print report button to produce a report.</div></div>",
+                     
+             url: ""
+            },
+            
+
+            geometryServer: "http://atlas.resources.ca.gov/arcgis/rest/services/Geometry/GeometryServer",
+            printServer:    "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task",
+            proxy : "http://node-ccc.ceres.ca.gov:4002/proxy"
+       }
+        
+        
+     </script>
+
+  </head>
+  <body class="claro" style="overflow:hidden">
+
+    <!-- OPTIONAL: include this if you want history support -->
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+
+
+  </body>
+</html>
