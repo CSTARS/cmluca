@@ -22,10 +22,11 @@ import edu.ucdavis.cstars.client.tasks.GeometryService.UnitType;
 import edu.ucdavis.cstars.client.tasks.Query;
 import edu.ucdavis.cstars.client.tasks.QueryTask;
 import edu.ucdavis.cstars.client.Error;
+import edu.ucdavis.gwt.gis.client.AppManager;
 
 public class CmlucaQuery {
 
-    private GeometryService gService = GeometryService.create("http://atlas.resources.ca.gov/ArcGIS/rest/services/Geometry/GeometryServer");
+    private GeometryService gService = null;
     
     private QueryTask airSpaceQuery = QueryTask.create("http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/SUA_in_WGA_states/MapServer/0");
     private QueryTask flightPathsQuery = QueryTask.create("http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/MTR_corridor_in_WGA_states/MapServer/0");
@@ -45,6 +46,7 @@ public class CmlucaQuery {
 
     public CmlucaQuery(MapWidget mw) {
             map = mw;
+            gService = GeometryService.create(AppManager.INSTANCE.getConfig().getGeometryServer());
 
             //identify proxy page to use if the toJson payload to the geometry service is greater than 2000 characters.
             //If this null or not available the buffer operation will not work.  Otherwise it will do a http post to the proxy.
@@ -90,9 +92,10 @@ public class CmlucaQuery {
                         radiusGraphicSmall = createSmallRadiusGraphic(p1);
                         radiusGraphicLarge = createLargeRadiusGraphic(p2);
                         
-                        map.getGraphics().add(radiusGraphicSmall);
                         map.getGraphics().add(radiusGraphicLarge);
+                        map.getGraphics().add(radiusGraphicSmall);
 
+                        popup.setMap(radiusGraphicSmall, radiusGraphicLarge);
                         execute(p1, false);
                         execute(p2, true);
                 }
@@ -156,27 +159,30 @@ public class CmlucaQuery {
     }
     
     private Graphic createSmallRadiusGraphic(Polygon p){
+            PolyStyleConfig style = ((CmlucaConfig) AppManager.INSTANCE.getConfig()).getSmallRadiusStyle();
+
             SimpleFillSymbol fill = SimpleFillSymbol.create(
                             SimpleFillSymbol.StyleType.STYLE_SOLID,
                             SimpleLineSymbol.create(
                                             SimpleLineSymbol.StyleType.STYLE_SOLID,
-                                            Color.create(255, 0, 0),
+                                            Color.create(style.getOutlineColor()),
                                             1
                             ),
-                            Color.create(255, 0, 0, 0.75)
-            );              
+                            Color.create(style.getFillColor())
+            );
             return Graphic.create(p, fill);
     }
     
     private Graphic createLargeRadiusGraphic(Polygon p){
+            PolyStyleConfig style = ((CmlucaConfig) AppManager.INSTANCE.getConfig()).getLargeRadiusStyle();
             SimpleFillSymbol fill = SimpleFillSymbol.create(
                             SimpleFillSymbol.StyleType.STYLE_SOLID,
                             SimpleLineSymbol.create(
                                             SimpleLineSymbol.StyleType.STYLE_SOLID,
-                                            Color.create(244, 255, 73),
+                                            Color.create(style.getOutlineColor()),
                                             1
                             ),
-                            Color.create(244, 255, 73, 0.25)
+                            Color.create(style.getFillColor())
             );              
             return Graphic.create(p, fill);
     }

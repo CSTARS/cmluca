@@ -15,3 +15,17 @@
 .cmluca-search-result i {
     color : #2278da;
 }
+
+/* State template overrides */
+h1 {
+	border: none !important;
+}
+h2 {
+    border: none !important;
+}
+h3 {
+    border: none !important;
+}
+h4 {
+    border: none !important;
+}

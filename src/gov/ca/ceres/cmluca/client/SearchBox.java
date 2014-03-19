@@ -46,6 +46,7 @@ import edu.ucdavis.cstars.client.tasks.Locator;
 import edu.ucdavis.cstars.client.tasks.Query;
 import edu.ucdavis.cstars.client.tasks.QueryTask;
 import edu.ucdavis.gwt.gis.client.AppManager;
+import edu.ucdavis.gwt.gis.client.config.SearchServiceConfig;
 import edu.ucdavis.gwt.gis.client.toolbar.GeocodeResultsPanel;
 
 public class SearchBox extends TextBox {
@@ -69,7 +70,7 @@ public class SearchBox extends TextBox {
     
     public SearchBox() {
         
-        JsArray<ServiceConfig> searchServices = ((CmlucaConfig) AppManager.INSTANCE.getConfig()).getSearchServices();
+        JsArray<SearchServiceConfig> searchServices = ((CmlucaConfig) AppManager.INSTANCE.getConfig()).getSearchServices();
         for( int i = 0; i < searchServices.length(); i++ ) {
             if( searchServices.get(i).getType().equals("geocoder") ) {
                 locators.add(Locator.create(searchServices.get(i).getUrl()));

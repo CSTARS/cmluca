@@ -10,9 +10,14 @@ public class CmlucaConfig extends GadgetConfig {
 	
 	protected CmlucaConfig() {}
 	
-	public final native JsArray<ServiceConfig> getSearchServices() /*-{
-		if( this.searchServices ) return this.searchServices;
-		return [];
+	public final native PolyStyleConfig getLargeRadiusStyle() /*-{
+	    if( this.largeRadiusStyle ) return this.largeRadiusStyle;
+	    return {};
 	}-*/;
+	
+	public final native PolyStyleConfig getSmallRadiusStyle() /*-{
+       if( this.smallRadiusStyle ) return this.smallRadiusStyle;
+       return {};
+    }-*/;
 
 }

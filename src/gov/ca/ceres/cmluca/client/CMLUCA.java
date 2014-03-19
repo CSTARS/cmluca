@@ -3,11 +3,10 @@ package gov.ca.ceres.cmluca.client;
 import com.google.gwt.core.client.EntryPoint;
 
 import edu.ucdavis.gwt.gis.client.AppManager;
+import edu.ucdavis.gwt.gis.client.Debugger;
 import edu.ucdavis.gwt.gis.client.GisClient;
 import edu.ucdavis.gwt.gis.client.GisClient.GisClientLoadHandler;
-import edu.ucdavis.gwt.gis.client.toolbar.menu.AddLayerMenu;
 import edu.ucdavis.gwt.gis.client.toolbar.menu.BasemapMenu;
-import edu.ucdavis.gwt.gis.client.toolbar.menu.ExportMenu;
 import edu.ucdavis.gwt.gis.client.toolbar.menu.HelpMenu;
 
 
@@ -37,9 +36,7 @@ public class CMLUCA implements EntryPoint {
         
 
         mapClient = new GisClient();
-        searchBox = new SearchBox();
-        mapClient.setCustomSearchBox(searchBox);
-        
+                
         mapClient.load(new GisClientLoadHandler(){
             @Override
             public void onLoad() {
@@ -54,24 +51,37 @@ public class CMLUCA implements EntryPoint {
         
     public void onClientReady() {
 
+        Debugger.INSTANCE.log("CMLUCA: onClientReady()");
+        
         mapClient.getToolbar().addToolbarMenu(new BasemapMenu());
         
         //ExportMenu export = new ExportMenu();
+        Debugger.INSTANCE.log("CMLUCA: 1");
 
-        Print.INSTANCE.setServer(AppManager.INSTANCE.getConfig().getPrintServer());
+        Print.INSTANCE.setServer(AppManager.INSTANCE.getConfig().getPrintConfig().getServer());
         //export.addItem(Print.INSTANCE.getToolbarItem());
         
+        Debugger.INSTANCE.log("CMLUCA: 2");
         //mapClient.getToolbar().addToolbarMenu(export);
         
         
         mapClient.getToolbar().addToolbarMenu(new HelpMenu());
+        
+        Debugger.INSTANCE.log("CMLUCA: 3");
 
         if( GisClient.isIE7() || GisClient.isIE8() ) {
             mapClient.getRootPanel().getElement().getStyle().setProperty("border", "1px solid #aaaaaa");
         }
         
+        Debugger.INSTANCE.log("CMLUCA: 4");
+        
+        searchBox = new SearchBox();
+        mapClient.getToolbar().setSearchBox(searchBox);
         searchBox.setMap(mapClient.getMapWidget());
+        
+        Debugger.INSTANCE.log("CMLUCA: onClientReady()");
 
+        mapClient.expandLegends(true);
     }
     
     

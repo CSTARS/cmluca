@@ -9,10 +9,7 @@
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.user.User'/>
 
-
-  <!--   
   <add-linker name="xs" />
-  -->
 
   <!-- Other module inherits                                      -->
   <inherits name='edu.ucdavis.gwt.gis.GwtGis' />
