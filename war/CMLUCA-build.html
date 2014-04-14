@@ -10,11 +10,18 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+  <script src="http://js.arcgis.com/3.8/" ></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/client.js?onload=ginit"></script>
+  <script src="cmluca/js/bootstrap.min.js" />
+  <script src="cmluca/js/idangerous.swiper-1.9.min.js"></script>
+  <script src="cmluca/js/jquery.esriPreview.js"></script>
+
     <script type="text/javascript" language="javascript" src="cmluca/cmluca.nocache.js"></script>
         <script type="text/javascript" language="javascript">
         
         var mapConfig = {
-                title: "CMLUCA",
+                title: "",
                 //anchor: "GadgetPanel",
                 zoom : 7,
                 center : [-121.01, 38.22],
@@ -42,26 +49,29 @@
                 ],
                 datalayers: [
                 {
-                    label:"Military Bases",
-                    url:"http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/DOD_Inst_Ranges/MapServer",
-                    legendUrl: "http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/DOD_Inst_Ranges/MapServer/legend?f=json",
+                    label:"Air Space",
+                    url:"http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/SUA_in_WGA_states/MapServer",
+                    legendUrl: "http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/SUA_in_WGA_states/MapServer/legend?f=json",
                     visible:true,
-                    opacity:0.8
+                    opacity:0.8,
+                    showLegend:true,
                 },
                 {
                     label:"Flight Paths",
                     url:"http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/MTR_corridor_in_WGA_states/MapServer",
                     legendUrl: "http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/MTR_corridor_in_WGA_states/MapServer/legend?f=json",
                     visible:true,
-                    opacity:0.8
+                    opacity:0.8,
+                    showLegend:true
                 },
                 {
-                    label:"Air Space",
-                    url:"http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/SUA_in_WGA_states/MapServer",
-                    legendUrl: "http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/SUA_in_WGA_states/MapServer/legend?f=json",
+                    label:"Military Bases",
+                    url:"http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/DOD_Inst_Ranges/MapServer",
+                    legendUrl: "http://atlas.resources.ca.gov/ArcGIS/rest/services/Military/DOD_Inst_Ranges/MapServer/legend?f=json",
                     visible:true,
-                    opacity:0.8
-                },
+                    opacity:0.8,
+                    showLegend: true
+                }
 
             ],
 
@@ -78,8 +88,9 @@
             },
 
             print : {
-                server: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task',
+                //server: 'http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task',
                 //server : "https://myplan.casil.ucdavis.edu/arcgis/rest/services/PrintMapTemplate/GPServer/Export%20Web%20Map",
+                server: 'http://myplan.casil.ucdavis.edu/arcgis/rest/services/CMLUCA_template/GPServer/Export%20Web%20Map',
                 defaultTitle : "Ceres Maps - Export",
                 defaultFormat : "PNG32"
             },
@@ -108,9 +119,9 @@
 
             //geometryServer: "http://atlas.resources.ca.gov/arcgis/rest/services/Geometry/GeometryServer",
             geometryServer:"http://services.gis.ca.gov/ArcGIS/rest/services/Geometry/GeometryServer",
-            printServer:    "",
-            proxy : "http://esri-proxy.casil.ucdavis.edu/proxy",
-            xhrTimeout: 60000
+            proxy : "http://cmluca.projects.atlas.ca.gov/proxy/proxy",
+            enableGeolocate: false,
+            xhrTimeout: 1200000
        }
         
         

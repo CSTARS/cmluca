@@ -43,9 +43,11 @@ public class CmlucaQuery {
     
     private MapWidget map = null;
 
-
     public CmlucaQuery(MapWidget mw) {
             map = mw;
+            
+            map.addControl(popup);
+            
             gService = GeometryService.create(AppManager.INSTANCE.getConfig().getGeometryServer());
 
             //identify proxy page to use if the toJson payload to the geometry service is greater than 2000 characters.
@@ -60,12 +62,17 @@ public class CmlucaQuery {
                         popup.show();
                     } else {
                         Point pt = event.getMapPoint();
-                        query("Map Point: "+pt.getY()+", "+pt.getX(), event.getMapPoint());
+                        pt = (Point) Geometry.webMercatorToGeographic(pt);
+                        query("Map Point: "+format(pt.getY())+", "+format(pt.getX()), event.getMapPoint());
                     }
                     
                 }
             });
     }
+    
+    private final native double format(double num) /*-{
+        return num.toFixed(4);
+    }-*/;
     
     public void query(String name, Geometry geom) {
         reset();

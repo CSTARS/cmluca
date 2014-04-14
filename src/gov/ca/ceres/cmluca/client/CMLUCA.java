@@ -1,7 +1,11 @@
 package gov.ca.ceres.cmluca.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
+import edu.ucdavis.cstars.client.ESRI;
 import edu.ucdavis.gwt.gis.client.AppManager;
 import edu.ucdavis.gwt.gis.client.Debugger;
 import edu.ucdavis.gwt.gis.client.GisClient;
@@ -34,8 +38,9 @@ public class CMLUCA implements EntryPoint {
         
         injectMobileMetaTag();
         
-
+        //Window.alert("hello superdevmode");
         mapClient = new GisClient();
+       // ESRI.alwaysUseProxy(true);
                 
         mapClient.load(new GisClientLoadHandler(){
             @Override
@@ -76,7 +81,13 @@ public class CMLUCA implements EntryPoint {
         Debugger.INSTANCE.log("CMLUCA: 4");
         
         searchBox = new SearchBox();
-        mapClient.getToolbar().setSearchBox(searchBox);
+        
+        HorizontalPanel hp = new HorizontalPanel();
+        CountySelector cs = new CountySelector(searchBox);
+        hp.add(cs);
+        hp.add(searchBox);
+        
+        mapClient.getToolbar().setSearchBox(hp);
         searchBox.setMap(mapClient.getMapWidget());
         
         Debugger.INSTANCE.log("CMLUCA: onClientReady()");

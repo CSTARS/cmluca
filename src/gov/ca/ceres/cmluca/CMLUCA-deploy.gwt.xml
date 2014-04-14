@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  When updating your version of GWT, you should also update this DTD reference,
+  so that your app can take advantage of the latest GWT module capabilities.
+-->
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.1//EN"
+  "http://google-web-toolkit.googlecode.com/svn/tags/2.5.1/distro-source/core/src/gwt-module.dtd">
+<module rename-to='cmluca'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name='edu.ucdavis.cstars.EsriGwt' />
+  <inherits name='edu.ucdavis.gwt.gis.GwtGis' />
+
+<!-- Cross site linker -->
+  <add-linker name="xs" />
+
+  <!-- Other module inherits                                      -->
+  
+  <stylesheet src="style.css" /> 
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='gov.ca.ceres.cmluca.client.CMLUCA'/>
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+
+</module>

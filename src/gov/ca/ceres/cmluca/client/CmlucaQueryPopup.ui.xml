@@ -5,64 +5,60 @@
 		.important {
 			font-weight: bold;
 		}
-        .map {
-            float: right;
-        }
+        .location {
+	       padding: 5px 0 0 2px;
+	    }
 	</ui:style>
 	<g:HTMLPanel>
 	    
-	    <g:HTML ui:field="location"></g:HTML>
+	    <g:Anchor ui:field="closeBtn" addStyleNames="btn btn-link pull-right"></g:Anchor>
+	    <g:HTML ui:field="location" styleName="{style.location}"></g:HTML>
 	    
+	    <table class="table" style="margin-bottom:0px">
+            <tr>
+                <td><g:HTML ui:field="airSpace1000Icon"></g:HTML></td>
+                <td>Air Space</td>
+                <td><g:HTML ui:field="airSpace1000Text"></g:HTML></td>
+            </tr>
+            <tr>
+                <td><g:HTML ui:field="airSpace4000Icon"></g:HTML></td>
+                <td>Air Space</td>
+                <td><g:HTML ui:field="airSpace4000Text"></g:HTML></td>
+            </tr>
+            <tr>
+                <td><g:HTML ui:field="flightPath1000Icon"></g:HTML></td>
+                <td>Flight Path</td>
+                <td><g:HTML ui:field="flightPath1000Text"></g:HTML></td>
+            </tr>
+            <tr>
+                <td><g:HTML ui:field="flightPath4000Icon"></g:HTML></td>
+                <td>Flight Path</td>
+                <td><g:HTML ui:field="flightPath4000Text"></g:HTML></td>
+            </tr>
+            <tr>
+                <td><g:HTML ui:field="militaryBase1000Icon"></g:HTML></td>
+                <td>Military Installation</td>
+                <td><g:HTML ui:field="militaryBase1000Text"></g:HTML></td>
+            </tr>
+            <tr>
+                <td><g:HTML ui:field="militaryBase4000Icon"></g:HTML></td>
+                <td>Military Installation</td>
+                <td><g:HTML ui:field="militaryBase4000Text"></g:HTML></td>
+            </tr>
+        </table>
 	    
-	    <div class="row-fluid">
-	        <div class="span8">
-	            
-	            <table class="table">
-		            <tr>
-		                <td><g:HTML ui:field="airSpace1000Icon"></g:HTML></td>
-		                <td>Air Space</td>
-		                <td><g:HTML ui:field="airSpace1000Text"></g:HTML></td>
-		            </tr>
-		            <tr>
-		                <td><g:HTML ui:field="airSpace4000Icon"></g:HTML></td>
-		                <td>Air Space</td>
-		                <td><g:HTML ui:field="airSpace4000Text"></g:HTML></td>
-		            </tr>
-		            <tr>
-		                <td><g:HTML ui:field="flightPath1000Icon"></g:HTML></td>
-		                <td>Flight Path</td>
-		                <td><g:HTML ui:field="flightPath1000Text"></g:HTML></td>
-		            </tr>
-		            <tr>
-		                <td><g:HTML ui:field="flightPath4000Icon"></g:HTML></td>
-		                <td>Flight Path</td>
-		                <td><g:HTML ui:field="flightPath4000Text"></g:HTML></td>
-		            </tr>
-		            <tr>
-		                <td><g:HTML ui:field="militaryBase1000Icon"></g:HTML></td>
-		                <td>Military Base</td>
-		                <td><g:HTML ui:field="militaryBase1000Text"></g:HTML></td>
-		            </tr>
-		            <tr>
-		                <td><g:HTML ui:field="militaryBase4000Icon"></g:HTML></td>
-		                <td>Military Base</td>
-		                <td><g:HTML ui:field="militaryBase4000Text"></g:HTML></td>
-		            </tr>
-		        </table>
-	            
-	        </div>
-	        <div class="span4">
-	            <g:SimplePanel ui:field="map" styleName="{style.map}"></g:SimplePanel>
-	            
-	            <div style="margin-top:170px">
-	               <h4>Legend</h4>
-	               <g:HTML ui:field="smallBufferLegend"></g:HTML>
-	               <g:HTML ui:field="largeBufferLegend"></g:HTML>
-	            </div>
-	        </div>
-	        
-	    </div>
-	    
-
+        <table class="table" style="margin-bottom:0px">
+            <tr>
+                <td style="text-align:center">
+                    <g:SimplePanel ui:field="map"></g:SimplePanel>
+                </td>
+                <td style="text-align:center">
+                    <h4>Legend</h4>
+			        <g:HTML ui:field="smallBufferLegend"></g:HTML>
+			        <g:HTML ui:field="largeBufferLegend"></g:HTML>
+                </td>
+                
+            </tr>
+        </table>
 	</g:HTMLPanel>
 </ui:UiBinder> 

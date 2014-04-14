@@ -6,39 +6,25 @@ import java.util.LinkedList;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.ucdavis.cstars.client.Error;
 import edu.ucdavis.cstars.client.Graphic;
-import edu.ucdavis.cstars.client.InfoTemplate;
 import edu.ucdavis.cstars.client.MapWidget;
-import edu.ucdavis.cstars.client.Graphic.Attributes;
 import edu.ucdavis.cstars.client.callback.AddressToLocationsCallback;
 import edu.ucdavis.cstars.client.callback.QueryTaskCallback;
-import edu.ucdavis.cstars.client.dojo.Color;
-import edu.ucdavis.cstars.client.geometry.Geometry;
 import edu.ucdavis.cstars.client.geometry.Point;
 import edu.ucdavis.cstars.client.geometry.Polygon;
 import edu.ucdavis.cstars.client.layers.GraphicsLayer;
-import edu.ucdavis.cstars.client.symbol.SimpleLineSymbol;
-import edu.ucdavis.cstars.client.symbol.SimpleMarkerSymbol;
 import edu.ucdavis.cstars.client.tasks.Address;
 import edu.ucdavis.cstars.client.tasks.AddressCandidate;
 import edu.ucdavis.cstars.client.tasks.FeatureSet;
@@ -46,6 +32,7 @@ import edu.ucdavis.cstars.client.tasks.Locator;
 import edu.ucdavis.cstars.client.tasks.Query;
 import edu.ucdavis.cstars.client.tasks.QueryTask;
 import edu.ucdavis.gwt.gis.client.AppManager;
+import edu.ucdavis.gwt.gis.client.Debugger;
 import edu.ucdavis.gwt.gis.client.config.SearchServiceConfig;
 import edu.ucdavis.gwt.gis.client.toolbar.GeocodeResultsPanel;
 
@@ -68,8 +55,10 @@ public class SearchBox extends TextBox {
     private MapWidget map = null;
     private CmlucaQuery cmlucaQuery = null;
     
+    private Runnable searchHandler;
+    
     public SearchBox() {
-        
+        Debugger.INSTANCE.log("CMLUCA: 4.1");
         JsArray<SearchServiceConfig> searchServices = ((CmlucaConfig) AppManager.INSTANCE.getConfig()).getSearchServices();
         for( int i = 0; i < searchServices.length(); i++ ) {
             if( searchServices.get(i).getType().equals("geocoder") ) {
@@ -82,8 +71,8 @@ public class SearchBox extends TextBox {
             }
         }
 
-        
-        getElement().setAttribute("placeholder", "Find Location");
+        Debugger.INSTANCE.log("CMLUCA: 4.2");
+        getElement().setAttribute("placeholder", "Enter your Location");
         setStyleName("search-query");
 
         addKeyUpHandler(new KeyUpHandler(){
@@ -95,21 +84,25 @@ public class SearchBox extends TextBox {
                 }
             }
         });
-        
+        Debugger.INSTANCE.log("CMLUCA: 4.3");
         Window.addResizeHandler(new ResizeHandler(){
             @Override
             public void onResize(ResizeEvent event) {
                 resize();
             }
         });
-        
-
+    }
+    
+    public static LinkedList<CmlucaQueryTask> getQueries() {
+        return queries;
     }
     
     public void setMap(MapWidget map) {
+        Debugger.INSTANCE.log("CMLUCA: 4 setMap - 1");
         cmlucaQuery = new CmlucaQuery(map);
         this.map = map;
         resize();
+        Debugger.INSTANCE.log("CMLUCA: 4 setMap - 2");
     }
     
     
@@ -130,8 +123,19 @@ public class SearchBox extends TextBox {
         map = mapWidget;
         graphicsLayer = map.getGraphics();
     }
+    
+    public void setCounty(String county) {
+        if( county.length() == 0 ) return;
+        setText(county);
+    }
+    
+    public void setSearchHandler(Runnable searchHandler) {
+        this.searchHandler = searchHandler;
+    }
 
     private void search(String searchTxt) {
+        searchHandler.run();
+        
         resultsPopup.add(new HTML("<i class='icon-spinner icon-spin'></i> Searching '"+searchTxt+"'... "));
         resultsPopup.show();
         if( currentQuery != null ) currentQuery.cancel();
@@ -180,7 +184,11 @@ public class SearchBox extends TextBox {
         return btn;
     }
     
-    private void getGeometry(final SearchResult sr) {
+    public void getGeometry(SearchResult sr) {
+        getGeometry(sr, null);
+    }
+    
+    public void getGeometry(final SearchResult sr,final Runnable callback) {
         CmlucaQueryTask qt = null;
         for( CmlucaQueryTask cqt: queries ) {
             if( cqt.getUrl().contentEquals(sr.url) ) {
@@ -196,15 +204,18 @@ public class SearchBox extends TextBox {
         qt.execute(q, new QueryTaskCallback(){
             @Override
             public void onComplete(FeatureSet featureSet) {
+                if( callback != null ) callback.run();
+                
                 if( featureSet.getFeatures().length() == 0 ) {
                     Window.alert("Failed to fetch intersect geometry");
                     return;
                 }
-                cmlucaQuery.query(sr.name+" (Boundry)", featureSet.getFeatures().get(0).getGeometry());
+                cmlucaQuery.query(sr.name+" (Boundary)", featureSet.getFeatures().get(0).getGeometry());
                 map.setExtent(((Polygon) featureSet.getFeatures().get(0).getGeometry()).getExtent(), true);
             }
             @Override
             public void onError(Error error) {
+                if( callback != null ) callback.run();
                 debug(error);
                 //Window.alert("Failed to fetch intersect geometry");
             }
