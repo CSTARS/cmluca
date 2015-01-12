@@ -37,12 +37,12 @@
             </tr>
             <tr>
                 <td><g:HTML ui:field="militaryBase1000Icon"></g:HTML></td>
-                <td>Military Installation</td>
+                <td>Military Branch</td>
                 <td><g:HTML ui:field="militaryBase1000Text"></g:HTML></td>
             </tr>
             <tr>
                 <td><g:HTML ui:field="militaryBase4000Icon"></g:HTML></td>
-                <td>Military Installation</td>
+                <td>Military Branch</td>
                 <td><g:HTML ui:field="militaryBase4000Text"></g:HTML></td>
             </tr>
         </table>

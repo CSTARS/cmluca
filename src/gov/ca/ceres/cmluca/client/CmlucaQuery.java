@@ -2,6 +2,7 @@ package gov.ca.ceres.cmluca.client;
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.SimplePanel;
 
 import edu.ucdavis.cstars.client.ESRI;
 import edu.ucdavis.cstars.client.Graphic;
@@ -42,6 +43,7 @@ public class CmlucaQuery {
     private int radiusLong = 4000;
     
     private MapWidget map = null;
+    private SimplePanel test;
 
     public CmlucaQuery(MapWidget mw) {
             map = mw;
